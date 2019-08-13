@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sj.mapper.logistics.BiglogLogisticscontroltableMapper" >
+  <resultMap id="BaseResultMap" type="com.sj.entity.logistics.BiglogLogisticscontroltable" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="WorkSheetNo" property="worksheetno" jdbcType="VARCHAR" />
+    <result column="CType" property="ctype" jdbcType="BIT" />
+    <result column="Corporation" property="corporation" jdbcType="VARCHAR" />
+    <result column="WaybillID" property="waybillid" jdbcType="VARCHAR" />
+    <result column="Remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="InputPerson" property="inputperson" jdbcType="INTEGER" />
+    <result column="InputDate" property="inputdate" jdbcType="TIMESTAMP" />
+    <result column="InputCompany" property="inputcompany" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, WorkSheetNo, CType, Corporation, WaybillID, Remarks, InputPerson, InputDate, 
+    InputCompany
+  </sql>
+  <resultMap id="bgAndUserAndDeptResultMap" type="biglogLogisticscontroltable">
+    <id column="bid" property="id"/>
+    <result column="WorkSheetNo" property="worksheetno"  />
+    <result column="CType" property="ctype"  />
+    <result column="Corporation" property="corporation"  />
+    <result column="WaybillID" property="waybillid"  />
+    <result column="Remarks" property="remarks" />
+    <result column="InputPerson" property="inputperson"  />
+    <result column="InputDate" property="inputdate" />
+    <result column="InputCompany" property="inputcompany" />
+    <result column="username" property="username"/>
+    <association property="sysUser" javaType="sysUser">
+      <!-- 对应对象的主键 -->
+      <id column="sid" property="id"/>
+      <result column="username" property="username"/>
+    </association>
+    <association property="sysDept" javaType="sysDept">
+      <!-- 对应对象的主键 -->
+      <id column="did" property="id"/>
+      <result column="name" property="name"/>
+    </association>
+  </resultMap>
+  <select id="biglogLogisticscontroltableUserDept" parameterType="biglogLogisticscontroltable" resultMap="bgAndUserAndDeptResultMap" >
+    select bl.id bid, WorkSheetNo,CType,Corporation,WaybillID,Remarks,InputPerson,InputCompany,InputDate,username,su.id sid,name,sd.id did from biglog_logisticscontroltable bl
+    INNER JOIN sys_user su on bl.InputPerson=su.id
+    INNER JOIN sys_dept sd on bl.InputCompany=sd.id
+    <where>
+      <if test="worksheetno !=null and worksheetno !=''">
+        and worksheetno LIKE CONCAT('%',#{worksheetno },'%' )
+      </if>
+      <if test="corporation !=null and corporation !=''">
+        and corporation LIKE CONCAT('%',#{corporation },'%' )
+      </if>
+      <if test="inputdate !=null">
+        and  DATE_FORMAT(inputdate, '%Y-%m-%d') like DATE_FORMAT(#{inputdate},'%Y-%m-%d')
+      </if>
+      <if test="username !=null and username !=''">
+        and username LIKE CONCAT('%',#{username },'%' )
+      </if>
+    </where>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sj.entity.logistics.BiglogLogisticscontroltableExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from biglog_logisticscontroltable
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from biglog_logisticscontroltable
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from biglog_logisticscontroltable
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sj.entity.logistics.BiglogLogisticscontroltableExample" >
+    delete from biglog_logisticscontroltable
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sj.entity.logistics.BiglogLogisticscontroltable" >
+    insert into biglog_logisticscontroltable (ID, WorkSheetNo, CType, 
+      Corporation, WaybillID, Remarks, 
+      InputPerson, InputDate, InputCompany
+      )
+    values (#{id,jdbcType=INTEGER}, #{worksheetno,jdbcType=VARCHAR}, #{ctype,jdbcType=BIT}, 
+      #{corporation,jdbcType=VARCHAR}, #{waybillid,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, 
+      #{inputperson,jdbcType=INTEGER}, #{inputdate,jdbcType=TIMESTAMP}, #{inputcompany,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sj.entity.logistics.BiglogLogisticscontroltable" >
+    insert into biglog_logisticscontroltable
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="worksheetno != null" >
+        WorkSheetNo,
+      </if>
+      <if test="ctype != null" >
+        CType,
+      </if>
+      <if test="corporation != null" >
+        Corporation,
+      </if>
+      <if test="waybillid != null" >
+        WaybillID,
+      </if>
+      <if test="remarks != null" >
+        Remarks,
+      </if>
+      <if test="inputperson != null" >
+        InputPerson,
+      </if>
+      <if test="inputdate != null" >
+        InputDate,
+      </if>
+      <if test="inputcompany != null" >
+        InputCompany,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="worksheetno != null" >
+        #{worksheetno,jdbcType=VARCHAR},
+      </if>
+      <if test="ctype != null" >
+        #{ctype,jdbcType=BIT},
+      </if>
+      <if test="corporation != null" >
+        #{corporation,jdbcType=VARCHAR},
+      </if>
+      <if test="waybillid != null" >
+        #{waybillid,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="inputperson != null" >
+        #{inputperson,jdbcType=INTEGER},
+      </if>
+      <if test="inputdate != null" >
+        #{inputdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inputcompany != null" >
+        #{inputcompany,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sj.entity.logistics.BiglogLogisticscontroltableExample" resultType="java.lang.Integer" >
+    select count(*) from biglog_logisticscontroltable
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update biglog_logisticscontroltable
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.worksheetno != null" >
+        WorkSheetNo = #{record.worksheetno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctype != null" >
+        CType = #{record.ctype,jdbcType=BIT},
+      </if>
+      <if test="record.corporation != null" >
+        Corporation = #{record.corporation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.waybillid != null" >
+        WaybillID = #{record.waybillid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remarks != null" >
+        Remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inputperson != null" >
+        InputPerson = #{record.inputperson,jdbcType=INTEGER},
+      </if>
+      <if test="record.inputdate != null" >
+        InputDate = #{record.inputdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.inputcompany != null" >
+        InputCompany = #{record.inputcompany,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update biglog_logisticscontroltable
+    set ID = #{record.id,jdbcType=INTEGER},
+      WorkSheetNo = #{record.worksheetno,jdbcType=VARCHAR},
+      CType = #{record.ctype,jdbcType=BIT},
+      Corporation = #{record.corporation,jdbcType=VARCHAR},
+      WaybillID = #{record.waybillid,jdbcType=VARCHAR},
+      Remarks = #{record.remarks,jdbcType=VARCHAR},
+      InputPerson = #{record.inputperson,jdbcType=INTEGER},
+      InputDate = #{record.inputdate,jdbcType=TIMESTAMP},
+      InputCompany = #{record.inputcompany,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sj.entity.logistics.BiglogLogisticscontroltable" >
+    update biglog_logisticscontroltable
+    <set >
+      <if test="worksheetno != null" >
+        WorkSheetNo = #{worksheetno,jdbcType=VARCHAR},
+      </if>
+      <if test="ctype != null" >
+        CType = #{ctype,jdbcType=BIT},
+      </if>
+      <if test="corporation != null" >
+        Corporation = #{corporation,jdbcType=VARCHAR},
+      </if>
+      <if test="waybillid != null" >
+        WaybillID = #{waybillid,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        Remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="inputperson != null" >
+        InputPerson = #{inputperson,jdbcType=INTEGER},
+      </if>
+      <if test="inputdate != null" >
+        InputDate = #{inputdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inputcompany != null" >
+        InputCompany = #{inputcompany,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sj.entity.logistics.BiglogLogisticscontroltable" >
+    update biglog_logisticscontroltable
+    set WorkSheetNo = #{worksheetno,jdbcType=VARCHAR},
+      CType = #{ctype,jdbcType=BIT},
+      Corporation = #{corporation,jdbcType=VARCHAR},
+      WaybillID = #{waybillid,jdbcType=VARCHAR},
+      Remarks = #{remarks,jdbcType=VARCHAR},
+      InputPerson = #{inputperson,jdbcType=INTEGER},
+      InputDate = #{inputdate,jdbcType=TIMESTAMP},
+      InputCompany = #{inputcompany,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

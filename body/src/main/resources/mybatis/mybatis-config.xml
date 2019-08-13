@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- 初始化 -->
+<configuration>
+    <!-- 给实体类取别名 -->
+    <typeAliases>
+        <!-- 给单个实体类取别名 <typeAlias type="com.xr.entity.Users" alias="users"/> -->
+        <!-- 整体包下的类取别名，别名为类名的首字母大写或小写 -->
+        <package name="com.sj.entity" />
+    </typeAliases>
+
+    <!-- mybatis添加分页的拦截器
+    <plugins>
+    <plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+    </plugins>
+    -->
+
+
+
+
+</configuration>

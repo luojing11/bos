@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sj.mapper.reportforms.AccworkorderMapper" >
+  <resultMap id="BaseResultMap" type="com.sj.entity.reportforms.Accworkorder" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="BusinessNoticeNo" property="businessnoticeno" jdbcType="VARCHAR" />
+    <result column="CustomNo" property="customno" jdbcType="VARCHAR" />
+    <result column="JobNo" property="jobno" jdbcType="VARCHAR" />
+    <result column="JobType" property="jobtype" jdbcType="INTEGER" />
+    <result column="PickupStatus" property="pickupstatus" jdbcType="INTEGER" />
+    <result column="ShortMessageInt" property="shortmessageint" jdbcType="INTEGER" />
+    <result column="WorkGenerationTime" property="workgenerationtime" jdbcType="TIMESTAMP" />
+    <result column="AfterSingleNum" property="aftersinglenum" jdbcType="INTEGER" />
+    <result column="SmallMemberNum" property="smallmembernum" jdbcType="INTEGER" />
+    <result column="PickupUnit" property="pickupunit" jdbcType="INTEGER" />
+    <result column="PickupTime" property="pickuptime" jdbcType="TIMESTAMP" />
+    <result column="SortingCode" property="sortingcode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, BusinessNoticeNo, CustomNo, JobNo, JobType, PickupStatus, ShortMessageInt, WorkGenerationTime, 
+    AfterSingleNum, SmallMemberNum, PickupUnit, PickupTime, SortingCode
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sj.entity.reportforms.AccworkorderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from acc_workorder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from acc_workorder
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from acc_workorder
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sj.entity.reportforms.AccworkorderExample" >
+    delete from acc_workorder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sj.entity.reportforms.Accworkorder" >
+    insert into acc_workorder (ID, BusinessNoticeNo, CustomNo, 
+      JobNo, JobType, PickupStatus, 
+      ShortMessageInt, WorkGenerationTime, 
+      AfterSingleNum, SmallMemberNum, PickupUnit, 
+      PickupTime, SortingCode)
+    values (#{id,jdbcType=INTEGER}, #{businessnoticeno,jdbcType=VARCHAR}, #{customno,jdbcType=VARCHAR}, 
+      #{jobno,jdbcType=VARCHAR}, #{jobtype,jdbcType=INTEGER}, #{pickupstatus,jdbcType=INTEGER}, 
+      #{shortmessageint,jdbcType=INTEGER}, #{workgenerationtime,jdbcType=TIMESTAMP}, 
+      #{aftersinglenum,jdbcType=INTEGER}, #{smallmembernum,jdbcType=INTEGER}, #{pickupunit,jdbcType=INTEGER}, 
+      #{pickuptime,jdbcType=TIMESTAMP}, #{sortingcode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sj.entity.reportforms.Accworkorder" >
+    insert into acc_workorder
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="businessnoticeno != null" >
+        BusinessNoticeNo,
+      </if>
+      <if test="customno != null" >
+        CustomNo,
+      </if>
+      <if test="jobno != null" >
+        JobNo,
+      </if>
+      <if test="jobtype != null" >
+        JobType,
+      </if>
+      <if test="pickupstatus != null" >
+        PickupStatus,
+      </if>
+      <if test="shortmessageint != null" >
+        ShortMessageInt,
+      </if>
+      <if test="workgenerationtime != null" >
+        WorkGenerationTime,
+      </if>
+      <if test="aftersinglenum != null" >
+        AfterSingleNum,
+      </if>
+      <if test="smallmembernum != null" >
+        SmallMemberNum,
+      </if>
+      <if test="pickupunit != null" >
+        PickupUnit,
+      </if>
+      <if test="pickuptime != null" >
+        PickupTime,
+      </if>
+      <if test="sortingcode != null" >
+        SortingCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="businessnoticeno != null" >
+        #{businessnoticeno,jdbcType=VARCHAR},
+      </if>
+      <if test="customno != null" >
+        #{customno,jdbcType=VARCHAR},
+      </if>
+      <if test="jobno != null" >
+        #{jobno,jdbcType=VARCHAR},
+      </if>
+      <if test="jobtype != null" >
+        #{jobtype,jdbcType=INTEGER},
+      </if>
+      <if test="pickupstatus != null" >
+        #{pickupstatus,jdbcType=INTEGER},
+      </if>
+      <if test="shortmessageint != null" >
+        #{shortmessageint,jdbcType=INTEGER},
+      </if>
+      <if test="workgenerationtime != null" >
+        #{workgenerationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aftersinglenum != null" >
+        #{aftersinglenum,jdbcType=INTEGER},
+      </if>
+      <if test="smallmembernum != null" >
+        #{smallmembernum,jdbcType=INTEGER},
+      </if>
+      <if test="pickupunit != null" >
+        #{pickupunit,jdbcType=INTEGER},
+      </if>
+      <if test="pickuptime != null" >
+        #{pickuptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sortingcode != null" >
+        #{sortingcode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sj.entity.reportforms.AccworkorderExample" resultType="java.lang.Integer" >
+    select count(*) from acc_workorder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update acc_workorder
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.businessnoticeno != null" >
+        BusinessNoticeNo = #{record.businessnoticeno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customno != null" >
+        CustomNo = #{record.customno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobno != null" >
+        JobNo = #{record.jobno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobtype != null" >
+        JobType = #{record.jobtype,jdbcType=INTEGER},
+      </if>
+      <if test="record.pickupstatus != null" >
+        PickupStatus = #{record.pickupstatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.shortmessageint != null" >
+        ShortMessageInt = #{record.shortmessageint,jdbcType=INTEGER},
+      </if>
+      <if test="record.workgenerationtime != null" >
+        WorkGenerationTime = #{record.workgenerationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.aftersinglenum != null" >
+        AfterSingleNum = #{record.aftersinglenum,jdbcType=INTEGER},
+      </if>
+      <if test="record.smallmembernum != null" >
+        SmallMemberNum = #{record.smallmembernum,jdbcType=INTEGER},
+      </if>
+      <if test="record.pickupunit != null" >
+        PickupUnit = #{record.pickupunit,jdbcType=INTEGER},
+      </if>
+      <if test="record.pickuptime != null" >
+        PickupTime = #{record.pickuptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sortingcode != null" >
+        SortingCode = #{record.sortingcode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update acc_workorder
+    set ID = #{record.id,jdbcType=INTEGER},
+      BusinessNoticeNo = #{record.businessnoticeno,jdbcType=VARCHAR},
+      CustomNo = #{record.customno,jdbcType=VARCHAR},
+      JobNo = #{record.jobno,jdbcType=VARCHAR},
+      JobType = #{record.jobtype,jdbcType=INTEGER},
+      PickupStatus = #{record.pickupstatus,jdbcType=INTEGER},
+      ShortMessageInt = #{record.shortmessageint,jdbcType=INTEGER},
+      WorkGenerationTime = #{record.workgenerationtime,jdbcType=TIMESTAMP},
+      AfterSingleNum = #{record.aftersinglenum,jdbcType=INTEGER},
+      SmallMemberNum = #{record.smallmembernum,jdbcType=INTEGER},
+      PickupUnit = #{record.pickupunit,jdbcType=INTEGER},
+      PickupTime = #{record.pickuptime,jdbcType=TIMESTAMP},
+      SortingCode = #{record.sortingcode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sj.entity.reportforms.Accworkorder" >
+    update acc_workorder
+    <set >
+      <if test="businessnoticeno != null" >
+        BusinessNoticeNo = #{businessnoticeno,jdbcType=VARCHAR},
+      </if>
+      <if test="customno != null" >
+        CustomNo = #{customno,jdbcType=VARCHAR},
+      </if>
+      <if test="jobno != null" >
+        JobNo = #{jobno,jdbcType=VARCHAR},
+      </if>
+      <if test="jobtype != null" >
+        JobType = #{jobtype,jdbcType=INTEGER},
+      </if>
+      <if test="pickupstatus != null" >
+        PickupStatus = #{pickupstatus,jdbcType=INTEGER},
+      </if>
+      <if test="shortmessageint != null" >
+        ShortMessageInt = #{shortmessageint,jdbcType=INTEGER},
+      </if>
+      <if test="workgenerationtime != null" >
+        WorkGenerationTime = #{workgenerationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aftersinglenum != null" >
+        AfterSingleNum = #{aftersinglenum,jdbcType=INTEGER},
+      </if>
+      <if test="smallmembernum != null" >
+        SmallMemberNum = #{smallmembernum,jdbcType=INTEGER},
+      </if>
+      <if test="pickupunit != null" >
+        PickupUnit = #{pickupunit,jdbcType=INTEGER},
+      </if>
+      <if test="pickuptime != null" >
+        PickupTime = #{pickuptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sortingcode != null" >
+        SortingCode = #{sortingcode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sj.entity.reportforms.Accworkorder" >
+    update acc_workorder
+    set BusinessNoticeNo = #{businessnoticeno,jdbcType=VARCHAR},
+      CustomNo = #{customno,jdbcType=VARCHAR},
+      JobNo = #{jobno,jdbcType=VARCHAR},
+      JobType = #{jobtype,jdbcType=INTEGER},
+      PickupStatus = #{pickupstatus,jdbcType=INTEGER},
+      ShortMessageInt = #{shortmessageint,jdbcType=INTEGER},
+      WorkGenerationTime = #{workgenerationtime,jdbcType=TIMESTAMP},
+      AfterSingleNum = #{aftersinglenum,jdbcType=INTEGER},
+      SmallMemberNum = #{smallmembernum,jdbcType=INTEGER},
+      PickupUnit = #{pickupunit,jdbcType=INTEGER},
+      PickupTime = #{pickuptime,jdbcType=TIMESTAMP},
+      SortingCode = #{sortingcode,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
